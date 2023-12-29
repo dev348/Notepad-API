@@ -2,6 +2,7 @@ const Express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const morgan = require('morgan');
 
 
 const Note = require('./model/noteModel');
@@ -9,6 +10,8 @@ const Note = require('./model/noteModel');
 
 const app = Express();
 const PORT = 5000;
+
+app.use(morgan('dev'));
 
 mongoose.connect('mongodb://127.0.0.1:27017/DGV-Notes')
 .then(() => console.log("Connected to database"))
@@ -29,6 +32,18 @@ app.use(bodyParser.urlencoded({extended: true})); // parse application/x-www-for
 
 
 // Create a API 
+
+app.get('/api/notes/:id', (req, res) => {
+    const id = req.params.id;
+    Note.findById(id)
+        .then(note => {
+            if (!note) {
+                return res.status(404).send("Note not found.");
+            }
+            res.json(note);
+        })
+        .catch(err => res.status(500).json(err));
+});
 
 app.route('/api/notes') // /api/notes
     .get((req, res) => {
