@@ -13,7 +13,7 @@ const PORT = 5000;
 
 app.use(morgan('dev'));
 
-mongoose.connect('mongodb+srv://mswaran348:icuRMeuiwksfVFqA@cluster0.rhpvk7a.mongodb.net/DGV-Notes')
+mongoose.connect('mongodb+srv://mswaran348:jPw1TbMxKpi6AfyT@cluster0.wafsw3s.mongodb.net/noteapp')
 .then(() => console.log("Connected to database"))
 .catch(err => console.error("Could not connect to MongoDB", err));
 
